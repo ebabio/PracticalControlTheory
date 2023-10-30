@@ -1,0 +1,10 @@
+# FILES TO BE IGNORED FROM THE REPOSITORY
+
+# Simulink project folders and compiled Simulink models
+slprj/
+*.slxc
+*.autosave
+
+# Matlab backup files
+*.asv
+*.bak
