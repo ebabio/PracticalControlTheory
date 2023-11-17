@@ -1,5 +1,14 @@
-function simplot(simtt)
-tiledlayout(3,1);
+function simplot(simtt, options)
+arguments
+    simtt timetable
+    options.PlotEnergy = false;
+end
+
+if options.PlotEnergy
+    tiledlayout(3,1);
+else
+    tiledlayout(2,1);
+end
 ax = [];
 
 ax= [ax, nexttile()];
@@ -8,9 +17,11 @@ ylabel('x')
 ax= [ax, nexttile()];
 plot(simtt.Time, simtt.theta);
 ylabel('\theta')
-ax= [ax, nexttile()];
-plot(simtt.Time, simtt.energy);
-ylabel('e')
+if options.PlotEnergy
+    ax= [ax, nexttile()];
+    plot(simtt.Time, simtt.energy);
+    ylabel('e')
+end
 
 linkaxes(ax, 'x');
 xlabel('time [s]')
