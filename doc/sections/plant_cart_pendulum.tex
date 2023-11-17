@@ -13,19 +13,19 @@ We will use as a plant a cart pendulum for several reasons. First of all, its si
 We will modify the cart pendulum plant slightly to allow for a more convenient parametrization of the plant. The pendulum have a mass and moment of inertia, and the distance of the pivoting point to the center of mass $l$ can be modified arbitrarily and will be used to modify the plant operating point.
 
 \subsection{Derivation of the Equations of Motion}
-We will define as coordinates for the cart pendulum the position of the pivot $x$ and the pendulum angle $\theta$, which will be zero when hanging low and positive counterclockwise so that the $y$ axis is positive up. 
+We will define as coordinates for the cart pendulum the position of the pivot $x$ and the pendulum angle $\theta$, which will be zero when hanging low and positive counterclockwise so that the $y$ axis is positive up. $y$ will denote the position of the pendulum center of mass above the pivoting point.
 
 We will derive the equations of motion via the Lagrange equations and we will consider possible external forces so as to add any other forces if desired. We need to start by defining the kinetic energy $T$ of the body. The kinetic energy is the sum of the translational and rotational kinetic energies.
 
 The velocity of pendulum center of mass can be expressed as:
 \begin{equation}
-	\vec{v} = \left(\dot{x} + l c_\theta \dot{\theta} \right) \vec{i}
-	         			    + l s_\theta \dot{\theta}         \vec{j}
+	\vec{v} = \left(\dot{x} - y c_\theta \dot{\theta} \right) \vec{i}
+	         			    - y s_\theta \dot{\theta}         \vec{j}
 \end{equation}
 
 Where $c_\theta$ denotes $\cos \theta$, and $s_\theta$ the $\sin \theta$. The kinetic energy is:
 \begin{equation}
-	T = \frac{1}{2} m \left(\dot{x}^2 + l^2 \dot{\theta}^2 + 2 l c_\theta  \dot{x} \dot{\theta} \right) + \frac{1}{2}I\dot{\theta}^2
+	T = \frac{1}{2} m \left(\dot{x}^2 + y^2 \dot{\theta}^2 - 2 y c_\theta  \dot{x} \dot{\theta} \right) + \frac{1}{2}I\dot{\theta}^2
 \end{equation}
 
 So we can derive the equations of motion using the Lagrangian expression:
@@ -36,49 +36,49 @@ So we can derive the equations of motion using the Lagrangian expression:
 So we get:
 \begin{align}
 	\frac{d}{dt}\frac{\partial T}{\partial \dot{x}}-\frac{\partial T}{\partial x} &=
-	% \frac{d}{dt}\left(m \dot{x} + m l c_\theta \dot{\theta} \right) = 
-	m \ddot{x} + m l c_\theta \ddot{\theta} - m l s_\theta \dot{\theta}^2 = F_x \\
+	 \frac{d}{dt}\left(m \dot{x} - m y c_\theta \dot{\theta} \right) = 
+	m \ddot{x} - m y c_\theta \ddot{\theta} + m y s_\theta \dot{\theta}^2 = F_x \\
 	\frac{d}{dt}\frac{\partial T}{\partial \dot{\theta}}-\frac{\partial T}{\partial \theta} &=
-	%\frac{d}{dt} \left(m l^2 \dot{\theta} + m l c_\theta  \dot{x} \right) + m l s_\theta  \dot{x} \dot{\theta} \\  &=
-	\left(I+m l^2\right) \ddot{\theta} + m l c_\theta \ddot{x} = - m g l s_\theta + F_\theta
+	\frac{d}{dt} \left((I+m y^2) \dot{\theta} - m y c_\theta  \dot{x} \right) - m y s_\theta  \dot{x} \dot{\theta} \\  &=
+	\left(I+m y^2\right) \ddot{\theta} - m y c_\theta \ddot{x} = + m g y s_\theta + F_\theta
 \end{align}
 
 We can simplify these equations a bit further by removing common terms to identify the fundamental parameters, where we will make a bit of abuse of notation:
 \begin{alignat}{6}
-	l c_\theta \ddot{\theta} 	&& \ + \ && \ddot{x}  		 && \ - \ && l s_\theta \dot{\theta}^2 &= f_x \\
-	(I+l^2) \ddot{\theta} \		&& \ + \ && l c_\theta \ddot{x} && \ + \ && g l s_\theta                 &= f_\theta
+	-y c_\theta \ddot{\theta} 	&& \ + \ && \ddot{x}  		 && \ + \ && y s_\theta \dot{\theta}^2 &= f_x \\
+	(I+y^2) \ddot{\theta} \		&& \ - \ && y c_\theta \ddot{x} && \ - \ && g y s_\theta                 &= f_\theta
 \end{alignat}
 Where $I=I/m$, thus the abuse of notation, and $f_x=F/m$ and $f_\theta=F_\theta/(ml)$. We are left with only three parameters for the motion. There are two inertial parameters, $I$ which relates the linear and the base rotational inertia, $l$ which defines the rate of change of the rotational inertia with operating point, and the $g$ which determines the frequency of the pendular motion. 
-We can see as well that the equations stay the same if we consider a change of sign in $l$ or a change of 180 degrees in $\theta$.
+We can see as well that the equations stay the same if we consider a change of sign in $y$ or a change of 180 degrees in $\theta$.
 
 Finally, in order to have an explicit solution in state space, we will solve for the explicit expression of $\ddot{\theta}$ and substitute back in the expression above:
 \begin{alignat}{12}
-	%\ddot{theta}
-	%(I+l^2) \ddot{\theta} \		&& \ + \ && l c_\theta \ddot{x} && \ + \ && g l s_\theta                           &= f_\theta \\
-	%l^2 c_\theta^2 \ddot{\theta} 	&& \ + \ && l c_\theta \ddot{x} && \ - \ && l^2  c_\theta s_\theta \dot{\theta}^2 &= l c_\theta f_x \\
-	(I+l^2 s_\theta^2) \ddot{\theta}  && \ = \ &&  && \ - \ &&g  s_\theta  && \ - \ && l^2  c_\theta s_\theta \dot{\theta}^2  && \ - \ &&  l c_\theta f_x && \ + \ && f_\theta&&  \\
+	%%\ddot{theta}
+	%(I+y^2) \ddot{\theta} \		&& \ - \ && y c_\theta \ddot{x} && \ - \ && g y s_\theta                           &= f_\theta \\
+	%y^2 c_\theta^2 \ddot{\theta} 	&& \ - \ && y c_\theta \ddot{x} && \ - \ && y^2  c_\theta s_\theta \dot{\theta}^2 &= -y c_\theta f_x \\
+	(I+y^2 s_\theta^2) \ddot{\theta}  && \ = \ &&  && \ + \ &&g y s_\theta  && \ - \ && y^2  c_\theta s_\theta \dot{\theta}^2  && \ + \ &&  y c_\theta f_x && \ + \ && f_\theta&&  \\
 	%\ddot{x}-Done on a notebook
-	%\ddot{x} && \ = \ && && \ + \ && \frac{gl}{I+l^2 s_\theta^2} s_\theta && + l \left(1+\frac{l^2 c_\theta^2}{I+l^2 s_\theta^2}\right) s_\theta \dot{\theta}^2 && \ + \ && \left(1+\frac{l^2 c_\theta^2}{I+l^2 s_\theta^2}\right) f_x && \ - \ && \frac{l c_\theta}{I+l^2 s_\theta^2} f_\theta \\
-	(I+l^2 s_\theta^2) \ddot{x}       && \ = \ &&  && \ + \ && gl c_\theta s_\theta && \ + \ &&l (I+l^2) s_\theta \dot{\theta}^2      && \ + \ && (I+l^2) f_x     && \ - \ && l c_\theta f_\theta&&
+	%\ddot{x} && \ = \ && && \ + \ && \frac{gl}{I+y^2 s_\theta^2} s_\theta && - y \left(1+\frac{y^2 c_\theta^2}{I+y^2 s_\theta^2}\right) s_\theta \dot{\theta}^2 && \ + \ && \left(1+\frac{y^2 c_\theta^2}{I+y^2 s_\theta^2}\right) f_x && \ + \ && \frac{y c_\theta}{I+y^2 s_\theta^2} f_\theta \\
+	(I+y^2 s_\theta^2) \ddot{x}       && \ = \ &&  && \ - \ && gy c_\theta s_\theta && \ - \ &&y (I+y^2) s_\theta \dot{\theta}^2      && \ + \ && (I+y^2) f_x     && \ + \ && y c_\theta f_\theta&&
 \end{alignat}
 It is far from obvious these two expressions are correct, so we will to have check it. The easiest way it is to check the system is conservative, this is, implement the equations and compute the total energy and verify it doesn't change.
 
 For this, we consider the total energy of the system, which is given by:
 \begin{equation}
-	E = T + V = \frac{1}{2} \left(\dot{x}^2 + l^2 \dot{\theta}^2 + 2 l c_\theta  \dot{x} \dot{\theta} \right) + \frac{1}{2}I\dot{\theta}^2 - g l c_\theta
+	E = T + V = \frac{1}{2} \left(\dot{x}^2 + y^2 \dot{\theta}^2 - 2 y c_\theta  \dot{x} \dot{\theta} \right) + \frac{1}{2}I\dot{\theta}^2 + g y c_\theta
 \end{equation}
 
 \subsection{Linearization of the equations of motion}
 We will consider now the linearization of the equations of motion, we will linearize only for $\theta=0$, and to consider the opposite case, we will just consider $l$ to have a negative value.
 
 \begin{alignat}{5}
-	l \ddot{\theta} && \ + \ && \ddot{x} && \ &= f_x \\
-	\left(I+l^2\right) \ddot{\theta} && \ + \ && l \ddot{x} &&+ g l \theta &= f_\theta
+	-y \ddot{\theta} && \ + \ && \ddot{x} && \ &= f_x \\
+	\left(I+y^2\right) \ddot{\theta} && \ - \ && y \ddot{x} &&- g y \theta &= f_\theta
 \end{alignat}
 
 And in this case it is simpler to obtain an explicit state space after solving for $\ddot{x}$ and $\ddot{\theta}$:
 \begin{alignat}{6}
-	I \ddot{\theta} &=& -g \theta & \ - \ & l f_x & \ + \ &&f_\theta \\
-	I \ddot{x}      &=& +g l\theta & \ + \ & (I+l^2) f_x & \ - \ && l f_\theta
+	I \ddot{\theta} &=& -g \theta & \ + \ & y f_x & \ + \ &&f_\theta \\
+	I \ddot{x}      &=& -g y\theta & \ + \ & (I+y^2) f_x & \ + \ && y f_\theta
 \end{alignat}
-But is good news it is consistent with the nonlinear expression.
+The good news it is consistent with the nonlinear expression.
