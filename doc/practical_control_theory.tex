@@ -11,6 +11,10 @@
 % User packages
 \usepackage[]{appendix}
 
+% User config
+\setlength{\parskip}{\baselineskip}%
+\setlength{\parindent}{0pt}%
+
 %% Document properties (and title)
 \title{Practical Control Theory}
 \author{Enrique Babio}
@@ -24,12 +28,18 @@
 	
 	\section{Parallel and ideal formulations}
 	Present the two forms, and argue for the ideal formulation using the zero placement argument and the root locus description
+	
 	\section{Gain Scheduling}
 	Present the inadvertent effects due to gain scheduling, introduce the delta formulation as an alternative.
+	
 	\section{Integrator windup}
 	Present the effect of output saturation, the effects on system stability, and how to formulate the backcalculation and clamping strategies with standard and delta controllers.
+	
+	Idea: we can present how a single controller may not be able to control to plants by changing the CG position of the pendulum due to changes in the RHP. We can gain schedule the controller, see how it works, and then apply the delta formulation for it.
+	
 	\section{Initialization}
 	Bumpless initialization for standard and delta formulations. Smooth non bumpless formulations.
+	
 	\section{Controller switching}
 	Reuse the condition above, introduce the idea of switching controllers with the switching condition ensuring continuity.
 	
